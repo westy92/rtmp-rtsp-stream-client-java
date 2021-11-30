@@ -16,7 +16,6 @@
 
 package com.pedro.rtsp.rtsp.commands
 
-import android.util.Base64
 import android.util.Log
 import com.pedro.rtsp.BuildConfig
 import com.pedro.rtsp.rtsp.Protocol
@@ -26,6 +25,7 @@ import com.pedro.rtsp.rtsp.commands.SdpBody.createH265Body
 import com.pedro.rtsp.utils.AuthUtil.getMd5Hash
 import com.pedro.rtsp.utils.RtpConstants
 import com.pedro.rtsp.utils.getVideoStartCodeSize
+import org.apache.commons.codec.binary.Base64
 import java.io.BufferedReader
 import java.io.IOException
 import java.nio.ByteBuffer
@@ -98,7 +98,7 @@ open class CommandsManager {
 
   private fun encodeToString(bytes: ByteArray?): String {
     bytes?.let {
-      return Base64.encodeToString(it, 0, it.size, Base64.NO_WRAP)
+      return Base64.encodeBase64String(it)
     }
     return ""
   }
@@ -190,7 +190,7 @@ open class CommandsManager {
     } else {
       Log.i(TAG, "using basic auth")
       val data = "$user:$password"
-      val base64Data = Base64.encodeToString(data.toByteArray(), Base64.DEFAULT)
+      val base64Data = Base64.encodeBase64String(data.toByteArray())
       "Basic $base64Data"
     }
   }

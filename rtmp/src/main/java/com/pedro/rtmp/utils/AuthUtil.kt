@@ -16,11 +16,11 @@
 
 package com.pedro.rtmp.utils
 
-import android.util.Base64
+import org.apache.commons.codec.binary.Base64
 import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import java.util.*
+import java.util.Random
 
 /**
  * Created by pedro on 27/04/21.
@@ -109,7 +109,7 @@ object AuthUtil {
       val md = MessageDigest.getInstance("MD5")
       md.update(s.toByteArray())
       val md5hash = md.digest()
-      return Base64.encodeToString(md5hash, Base64.NO_WRAP)
+      return Base64.encodeBase64String(md5hash)
     } catch (ignore: Exception) { }
     return ""
   }
